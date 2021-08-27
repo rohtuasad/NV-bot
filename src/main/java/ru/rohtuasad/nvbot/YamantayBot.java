@@ -1,30 +1,21 @@
 package ru.rohtuasad.nvbot;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-import org.telegram.telegrambots.bots.TelegramLongPollingBot;
+import org.telegram.abilitybots.api.bot.AbilityBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 @Slf4j
-@Component
-public class CommandHandler extends TelegramLongPollingBot {
-  @Value("${bot.token}")
-  private String botToken;
+public class YamantayBot extends AbilityBot {
 
-  @Value("${bot.username}")
-  private String botUsername;
-
-  @Override
-  public String getBotUsername() {
-    return botUsername;
+  public YamantayBot(String botToken, String botUsername) {
+    super(botToken, botUsername);
   }
 
   @Override
-  public String getBotToken() {
-    return botToken;
+  public long creatorId() {
+    return 0;
   }
 
   @Override
