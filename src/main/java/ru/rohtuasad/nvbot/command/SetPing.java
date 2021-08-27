@@ -1,0 +1,34 @@
+package ru.rohtuasad.nvbot.command;
+
+import lombok.extern.slf4j.Slf4j;
+import org.telegram.telegrambots.extensions.bots.commandbot.commands.BotCommand;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.objects.Chat;
+import org.telegram.telegrambots.meta.api.objects.User;
+import org.telegram.telegrambots.meta.bots.AbsSender;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+
+@Slf4j
+public class SetPing extends BotCommand {
+
+  public SetPing() {
+    super("setping", "Пингануть бойцов");
+  }
+
+  @Override
+  public void execute(AbsSender absSender, User user, Chat chat, String[] strings) {
+    sendMessage(absSender, chat, "Запомнил");
+  }
+
+  private void sendMessage(AbsSender absSender, Chat chat, String answerText) {
+    SendMessage answer = new SendMessage();
+    answer.setChatId(chat.getId().toString());
+    answer.setText(answerText);
+
+    try {
+      absSender.execute(answer);
+    } catch (TelegramApiException e) {
+      log.error("Error while sending message", e);
+    }
+  }
+}
