@@ -19,9 +19,15 @@ public class CommandHandler extends TelegramLongPollingCommandBot {
   @Value("${bot.username}")
   private String botUsername;
 
+  private final SetPing setPing;
+
+  public CommandHandler(SetPing setPing) {
+    this.setPing = setPing;
+  }
+
   @PostConstruct
   public void init() {
-    register(new SetPing());
+    register(setPing);
   }
 
   @Override
@@ -37,7 +43,7 @@ public class CommandHandler extends TelegramLongPollingCommandBot {
       message.setText(update.getMessage().getText());
 
       try {
-        execute(message); // Call method to send the message
+        execute(message);
       } catch (TelegramApiException e) {
         log.error("Process message error", e);
       }
