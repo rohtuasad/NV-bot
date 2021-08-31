@@ -8,11 +8,13 @@ import org.telegram.telegrambots.extensions.bots.commandbot.TelegramLongPollingC
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import ru.rohtuasad.nvbot.command.Ping;
 import ru.rohtuasad.nvbot.command.SetPing;
 
 @Slf4j
 @Component
 public class CommandHandler extends TelegramLongPollingCommandBot {
+
   @Value("${bot.token}")
   private String botToken;
 
@@ -20,14 +22,17 @@ public class CommandHandler extends TelegramLongPollingCommandBot {
   private String botUsername;
 
   private final SetPing setPing;
+  private final Ping ping;
 
-  public CommandHandler(SetPing setPing) {
+  public CommandHandler(SetPing setPing, Ping ping) {
     this.setPing = setPing;
+    this.ping = ping;
   }
 
   @PostConstruct
   public void init() {
     register(setPing);
+    register(ping);
   }
 
   @Override
@@ -38,10 +43,9 @@ public class CommandHandler extends TelegramLongPollingCommandBot {
   @Override
   public void processNonCommandUpdate(Update update) {
     if (update.hasMessage() && update.getMessage().hasText()) {
-      SendMessage message = new SendMessage(); // Create a SendMessage object with mandatory fields
+      SendMessage message = new SendMessage();
       message.setChatId(update.getMessage().getChatId().toString());
       message.setText(update.getMessage().getText());
-
       try {
         execute(message);
       } catch (TelegramApiException e) {

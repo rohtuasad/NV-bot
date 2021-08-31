@@ -1,10 +1,14 @@
 package ru.rohtuasad.nvbot.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class TgChat {
-  private final String tgChatId;
-  private final String pingList;
-  private final String tgChatName;
+  private String tgChatId;
+  private String pingList;
+  private String tgChatName;
 }
